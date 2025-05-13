@@ -18,6 +18,7 @@ from frappe.email.queue import flush
 from frappe.tests import IntegrationTestCase
 from frappe.utils import add_days, getdate
 from frappe.core.doctype.communication.test_communication import create_email_account
+from frappe.tests.utils.generators import make_test_objects
 
 emails = [
 	"test_subscriber1@example.com",
@@ -40,6 +41,7 @@ class TestNewsletterMixin:
 	def setUp(self):
 		frappe.set_user("Administrator")
 		self.setup_email_group()
+		self.setup_email_domain()
 		create_email_account()
 
 	def tearDown(self):
@@ -55,6 +57,9 @@ class TestNewsletterMixin:
 			frappe.delete_doc("Newsletter", newsletter)
 			frappe.db.delete("Newsletter Email Group", {"parent": newsletter})
 			newsletters.remove(newsletter)
+
+	def setup_email_domain(self):
+		make_test_objects("Email Domain", reset=True)
 
 	def setup_email_group(self):
 		if not frappe.db.exists("Email Group", "_Test Email Group"):
