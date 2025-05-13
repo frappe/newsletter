@@ -10,6 +10,7 @@ from frappe.rate_limiter import rate_limit
 from frappe.utils.safe_exec import is_job_queued
 from frappe.utils.verified_command import get_signed_params, verify_request
 from frappe.website.website_generator import WebsiteGenerator
+from newsletter.utils import add_trackers_to_url
 
 from .exceptions import NewsletterAlreadySentError, NewsletterNotSavedError, NoRecipientFoundError
 
@@ -21,8 +22,8 @@ class Newsletter(WebsiteGenerator):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
-		from frappe.email.doctype.newsletter_attachment.newsletter_attachment import NewsletterAttachment
-		from frappe.email.doctype.newsletter_email_group.newsletter_email_group import NewsletterEmailGroup
+		from newsletter.newsletter.doctype.newsletter_attachment.newsletter_attachment import NewsletterAttachment
+		from newsletter.newsletter.doctype.newsletter_email_group.newsletter_email_group import NewsletterEmailGroup
 		from frappe.types import DF
 
 		attachments: DF.Table[NewsletterAttachment]
@@ -227,7 +228,7 @@ class Newsletter(WebsiteGenerator):
 			args=args,
 			email_read_tracker_url=None
 			if test_email
-			else "/api/method/frappe.email.doctype.newsletter.newsletter.newsletter_email_read",
+			else "/api/method/newsletter.newsletter.doctype.newsletter.newsletter.newsletter_email_read",
 		)
 
 		frappe.db.auto_commit_on_many_writes = is_auto_commit_set
@@ -255,7 +256,7 @@ class Newsletter(WebsiteGenerator):
 			if href and not href.startswith("#"):
 				if not frappe.utils.is_site_link(href):
 					continue
-				new_href = frappe.utils.add_trackers_to_url(
+				new_href = add_trackers_to_url(
 					href, source="Newsletter", campaign=self.campaign, medium=medium
 				)
 				link["href"] = new_href
@@ -310,7 +311,7 @@ def subscribe(email, email_group=None):
 
 	# build subscription confirmation URL
 	api_endpoint = frappe.utils.get_url(
-		"/api/method/frappe.email.doctype.newsletter.newsletter.confirm_subscription"
+		"/api/method/newsletter.newsletter.doctype.newsletter.newsletter.confirm_subscription"
 	)
 	signed_params = get_signed_params({"email": email, "email_group": email_group})
 	confirm_subscription_url = f"{api_endpoint}?{signed_params}"

@@ -5,16 +5,16 @@ from random import choice
 from unittest.mock import MagicMock, PropertyMock, patch
 
 import frappe
-from frappe.email.doctype.newsletter.exceptions import (
+from newsletter.newsletter.doctype.newsletter.exceptions import (
 	NewsletterAlreadySentError,
 	NoRecipientFoundError,
 )
-from frappe.email.doctype.newsletter.newsletter import (
+from newsletter.newsletter.doctype.newsletter.newsletter import (
 	Newsletter,
 	confirmed_unsubscribe,
 	send_scheduled_email,
 )
-from frappe.email.queue import flush
+from newsletter.newsletter.queue import flush
 from frappe.tests import IntegrationTestCase
 from frappe.utils import add_days, getdate
 
@@ -218,7 +218,7 @@ class TestNewsletter(TestNewsletterMixin, IntegrationTestCase):
 
 	def test_send_scheduled_email_error_handling(self):
 		newsletter = self.get_newsletter(schedule_send=add_days(getdate(), -1))
-		job_path = "frappe.email.doctype.newsletter.newsletter.Newsletter.queue_all"
+		job_path = "newsletter.newsletter.doctype.newsletter.newsletter.Newsletter.queue_all"
 		m = MagicMock(side_effect=frappe.OutgoingEmailError)
 
 		with self.assertRaises(frappe.OutgoingEmailError):
