@@ -17,6 +17,7 @@ from newsletter.newsletter.doctype.newsletter.newsletter import (
 from frappe.email.queue import flush
 from frappe.tests import IntegrationTestCase
 from frappe.utils import add_days, getdate
+from frappe.core.doctype.communication.test_communication import create_email_account
 
 emails = [
 	"test_subscriber1@example.com",
@@ -39,6 +40,7 @@ class TestNewsletterMixin:
 	def setUp(self):
 		frappe.set_user("Administrator")
 		self.setup_email_group()
+		create_email_account()
 
 	def tearDown(self):
 		frappe.set_user("Administrator")
