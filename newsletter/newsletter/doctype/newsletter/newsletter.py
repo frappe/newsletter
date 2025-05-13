@@ -10,7 +10,7 @@ from frappe.rate_limiter import rate_limit
 from frappe.utils.safe_exec import is_job_queued
 from frappe.utils.verified_command import get_signed_params, verify_request
 from frappe.website.website_generator import WebsiteGenerator
-from newsletter.utils import add_trackers_to_url
+from newsletter.newsletter.utils import add_trackers_to_url
 
 from .exceptions import NewsletterAlreadySentError, NewsletterNotSavedError, NoRecipientFoundError
 
