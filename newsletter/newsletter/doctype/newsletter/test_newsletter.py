@@ -14,7 +14,7 @@ from newsletter.newsletter.doctype.newsletter.newsletter import (
 	confirmed_unsubscribe,
 	send_scheduled_email,
 )
-from newsletter.newsletter.queue import flush
+from frappe.email.queue import flush
 from frappe.tests import IntegrationTestCase
 from frappe.utils import add_days, getdate
 
