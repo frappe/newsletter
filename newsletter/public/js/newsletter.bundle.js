@@ -1,1 +1,1 @@
-import "./generate_tracking_url.js"
+import "./generate_tracking_url.js";

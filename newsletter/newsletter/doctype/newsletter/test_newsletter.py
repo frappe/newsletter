@@ -5,6 +5,12 @@ from random import choice
 from unittest.mock import MagicMock, PropertyMock, patch
 
 import frappe
+from frappe.core.doctype.communication.test_communication import create_email_account
+from frappe.email.queue import flush
+from frappe.tests import IntegrationTestCase
+from frappe.tests.utils.generators import make_test_objects
+from frappe.utils import add_days, getdate
+
 from newsletter.newsletter.doctype.newsletter.exceptions import (
 	NewsletterAlreadySentError,
 	NoRecipientFoundError,
@@ -14,11 +20,6 @@ from newsletter.newsletter.doctype.newsletter.newsletter import (
 	confirmed_unsubscribe,
 	send_scheduled_email,
 )
-from frappe.email.queue import flush
-from frappe.tests import IntegrationTestCase
-from frappe.utils import add_days, getdate
-from frappe.core.doctype.communication.test_communication import create_email_account
-from frappe.tests.utils.generators import make_test_objects
 
 emails = [
 	"test_subscriber1@example.com",
