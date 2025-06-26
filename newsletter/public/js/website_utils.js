@@ -1,6 +1,6 @@
 // Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
 // License: GNU General Public License v3. See license.txt
-
+frappe.provide("newsletter");
 if (!window.newsletter) window.newsletter = {};
 
 newsletter.subscribe_to_newsletter = function (opts, btn) {
