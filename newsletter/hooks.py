@@ -30,7 +30,7 @@ app_include_js = ["newsletter.bundle.js"]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/newsletter/css/newsletter.css"
-# web_include_js = "/assets/newsletter/js/newsletter.js"
+web_include_js = "newsletter-web.bundle.js"
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "newsletter/public/scss/website"
@@ -236,3 +236,4 @@ app_include_js = ["newsletter.bundle.js"]
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
+update_website_context = "newsletter.overrides.website_context"
