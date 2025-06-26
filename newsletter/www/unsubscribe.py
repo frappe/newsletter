@@ -1,6 +1,7 @@
 import frappe
-from newsletter.newsletter.doctype.newsletter.newsletter import confirmed_unsubscribe
 from frappe.utils.verified_command import verify_request
+
+from newsletter.newsletter.doctype.newsletter.newsletter import confirmed_unsubscribe
 
 no_cache = True
 

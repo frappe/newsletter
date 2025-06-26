@@ -7,10 +7,10 @@ import frappe.utils
 from frappe import _
 from frappe.email.doctype.email_group.email_group import add_subscribers
 from frappe.rate_limiter import rate_limit
+from frappe.utils.data import add_trackers_to_url
 from frappe.utils.safe_exec import is_job_queued
 from frappe.utils.verified_command import get_signed_params, verify_request
 from frappe.website.website_generator import WebsiteGenerator
-from newsletter.newsletter.utils import add_trackers_to_url
 
 from .exceptions import NewsletterAlreadySentError, NewsletterNotSavedError, NoRecipientFoundError
 
@@ -22,9 +22,14 @@ class Newsletter(WebsiteGenerator):
 	from typing import TYPE_CHECKING
 
 	if TYPE_CHECKING:
-		from newsletter.newsletter.doctype.newsletter_attachment.newsletter_attachment import NewsletterAttachment
-		from newsletter.newsletter.doctype.newsletter_email_group.newsletter_email_group import NewsletterEmailGroup
 		from frappe.types import DF
+
+		from newsletter.newsletter.doctype.newsletter_attachment.newsletter_attachment import (
+			NewsletterAttachment,
+		)
+		from newsletter.newsletter.doctype.newsletter_email_group.newsletter_email_group import (
+			NewsletterEmailGroup,
+		)
 
 		attachments: DF.Table[NewsletterAttachment]
 		campaign: DF.Link | None
