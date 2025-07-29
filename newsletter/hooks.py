@@ -237,3 +237,11 @@ web_include_js = "newsletter-web.bundle.js"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 update_website_context = "newsletter.overrides.website_context"
+scheduler_events = {
+	"hourly": [
+		"newsletter.newsletter.doctype.newsletter.newsletter.send_scheduled_email",
+	],
+}
+website_route_rules = [
+    {"from_route": "/newsletters", "to_route": "Newsletter"}
+]
