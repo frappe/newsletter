@@ -242,6 +242,4 @@ scheduler_events = {
 		"newsletter.newsletter.doctype.newsletter.newsletter.send_scheduled_email",
 	],
 }
-website_route_rules = [
-    {"from_route": "/newsletters", "to_route": "Newsletter"}
-]
+website_route_rules = [{"from_route": "/newsletters", "to_route": "Newsletter"}]

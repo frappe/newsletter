@@ -5,13 +5,13 @@
 import frappe
 import frappe.utils
 from frappe import _
+from frappe.database.utils import commit_after_response
 from frappe.email.doctype.email_group.email_group import add_subscribers
 from frappe.rate_limiter import rate_limit
 from frappe.utils.data import add_trackers_to_url
 from frappe.utils.safe_exec import is_job_queued
 from frappe.utils.verified_command import get_signed_params, verify_request
 from frappe.website.website_generator import WebsiteGenerator
-from frappe.database.utils import  commit_after_response
 
 from .exceptions import NewsletterAlreadySentError, NewsletterNotSavedError, NoRecipientFoundError
 
@@ -454,13 +454,15 @@ def newsletter_email_read(recipient_email=None, reference_doctype=None, referenc
 	finally:
 		frappe.response.update(frappe.utils.get_imaginary_pixel_response())
 
+
 def _update_views_to_newsletter(doc):
-    newsletter = frappe.qb.DocType("Newsletter")
-    (
-				frappe.qb.update(newsletter)
-				.set(newsletter.total_views, newsletter.total_views + 1)
-				.where(newsletter.name == doc.name)
+	newsletter = frappe.qb.DocType("Newsletter")
+	(
+		frappe.qb.update(newsletter)
+		.set(newsletter.total_views, newsletter.total_views + 1)
+		.where(newsletter.name == doc.name)
 	).run()
+
 
 def get_default_email_group():
 	return _("Website", lang=frappe.db.get_default("language"))
