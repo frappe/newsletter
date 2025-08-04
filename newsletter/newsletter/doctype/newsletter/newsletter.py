@@ -5,6 +5,7 @@
 import frappe
 import frappe.utils
 from frappe import _
+from frappe.database.utils import commit_after_response
 from frappe.email.doctype.email_group.email_group import add_subscribers
 from frappe.rate_limiter import rate_limit
 from frappe.utils.data import add_trackers_to_url
@@ -441,12 +442,7 @@ def newsletter_email_read(recipient_email=None, reference_doctype=None, referenc
 	try:
 		doc = frappe.get_cached_doc("Newsletter", reference_name)
 		if doc.add_viewed(recipient_email, force=True, unique_views=True):
-			newsletter = frappe.qb.DocType("Newsletter")
-			(
-				frappe.qb.update(newsletter)
-				.set(newsletter.total_views, newsletter.total_views + 1)
-				.where(newsletter.name == doc.name)
-			).run()
+			commit_after_response(lambda: _update_views_to_newsletter(doc))
 
 	except Exception:
 		frappe.log_error(
@@ -457,6 +453,15 @@ def newsletter_email_read(recipient_email=None, reference_doctype=None, referenc
 
 	finally:
 		frappe.response.update(frappe.utils.get_imaginary_pixel_response())
+
+
+def _update_views_to_newsletter(doc):
+	newsletter = frappe.qb.DocType("Newsletter")
+	(
+		frappe.qb.update(newsletter)
+		.set(newsletter.total_views, newsletter.total_views + 1)
+		.where(newsletter.name == doc.name)
+	).run()
 
 
 def get_default_email_group():
