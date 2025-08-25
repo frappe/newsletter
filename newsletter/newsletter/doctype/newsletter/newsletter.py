@@ -221,7 +221,7 @@ class Newsletter(WebsiteGenerator):
 
 		frappe.sendmail(
 			subject=self.subject,
-			now = True,
+			now=True,
 			sender=sender,
 			recipients=emails,
 			attachments=attachments,
