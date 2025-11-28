@@ -73,7 +73,7 @@ class Newsletter(WebsiteGenerator):
 		count_by_status = frappe.get_all(
 			"Email Queue",
 			filters={"reference_doctype": self.doctype, "reference_name": self.name},
-			fields=["status", "count(name) as count"],
+			fields=["status", {"COUNT": "name", "as": "count"}],
 			group_by="status",
 			order_by="status",
 		)
