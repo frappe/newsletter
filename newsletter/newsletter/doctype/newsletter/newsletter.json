@@ -34,6 +34,7 @@
   "attachments",
   "send_unsubscribe_link",
   "send_webview_link",
+  "align_center",
   "schedule_settings_section",
   "scheduled_to_send",
   "schedule_sending",
@@ -245,6 +246,12 @@
    "fieldtype": "Link",
    "label": "Campaign",
    "options": "UTM Campaign"
+  },
+  {
+   "default": "0",
+   "fieldname": "align_center",
+   "fieldtype": "Check",
+   "label": "Align Center"
   }
  ],
  "has_web_view": 1,
@@ -254,7 +261,7 @@
  "is_published_field": "published",
  "links": [],
  "make_attachments_public": 1,
- "modified": "2024-11-12 12:41:02.569631",
+ "modified": "2025-12-03 16:00:17.130689",
  "modified_by": "Administrator",
  "module": "Newsletter",
  "name": "Newsletter",
@@ -274,6 +281,7 @@
   }
  ],
  "route": "newsletters",
+ "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "ASC",
  "states": [],
