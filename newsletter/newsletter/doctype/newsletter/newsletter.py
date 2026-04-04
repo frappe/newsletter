@@ -397,7 +397,8 @@ def get_list_context(context=None):
 			"no_breadcrumbs": True,
 			"title": _("Newsletters"),
 			"filters": {"published": 1},
-			"row_template": "email/doctype/newsletter/templates/newsletter_row.html",
+			"row_template": "newsletter/doctype/newsletter/templates/newsletter_row.html",
+			"list_template": "templates/includes/list/list.html",
 		}
 	)
 
